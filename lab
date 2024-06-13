@@ -1,0 +1,24 @@
+UDP Echo:
+server:
+------
+import socket 
+s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+s.bind(("127.0.0.1",7777))
+print("Server Started ..............")
+while True:
+    data,addr=s.recvfrom(1024)
+    print(f"Client:{data.decode()}")
+    msg=input("Server: ")
+    s.sendto(msg.encode(),addr)
+client:
+-------
+import socket
+s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+s.connect(("127.0.0.1",7777))
+print("Client connected to Server")
+while True:
+    msg=input("Client:")
+    s.send(msg.encode())
+    data,addr=s.recvfrom(1024)
+    print(f"Server:{data.decode()}")
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
